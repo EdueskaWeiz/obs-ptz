@@ -190,7 +190,7 @@ protected slots:
 	void joystickPOVEvent(const QJoystickPOVEvent evt);
 #else
 public:
-	void joystickSetup(){};
+	void joystickSetup() {};
 #endif /* ENABLE_JOYSTICK */
 
 public:

@@ -76,9 +76,8 @@ void PTZControls::OBSFrontendEventWrapper(enum obs_frontend_event event, void *p
 	PTZControls *controls = reinterpret_cast<PTZControls *>(ptr);
 	// Ensure execution on Qt main thread to prevent crashes
 	// OBS frontend callbacks may come from non-GUI threads
-	QMetaObject::invokeMethod(controls, [controls, event]() {
-		controls->OBSFrontendEvent(event);
-	}, Qt::QueuedConnection);
+	QMetaObject::invokeMethod(
+		controls, [controls, event]() { controls->OBSFrontendEvent(event); }, Qt::QueuedConnection);
 }
 
 void PTZControls::OBSFrontendEvent(enum obs_frontend_event event)
@@ -1205,13 +1204,9 @@ void PTZControls::on_actionPresetSave_triggered()
 	/* Show name input dialog before saving */
 	QString currentName = model->data(index, Qt::DisplayRole).toString();
 	bool ok = false;
-	QString newName = QInputDialog::getText(
-		this,
-		obs_module_text("PTZ.Action.Preset.Save"),
-		obs_module_text("PTZ.Action.Preset.Name.Label"),
-		QLineEdit::Normal,
-		currentName,
-		&ok);
+	QString newName = QInputDialog::getText(this, obs_module_text("PTZ.Action.Preset.Save"),
+						obs_module_text("PTZ.Action.Preset.Name.Label"), QLineEdit::Normal,
+						currentName, &ok);
 
 	if (!ok)
 		return; /* User cancelled — do nothing */
