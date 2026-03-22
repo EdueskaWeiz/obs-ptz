@@ -63,5 +63,5 @@ target_link_libraries(
 target_compile_options(
   properties-view
   INTERFACE
-    $<$<COMPILE_LANGUAGE:CXX>:-Wno-deprecated-declarations>
+    $<$<AND:$<COMPILE_LANGUAGE:CXX>,$<NOT:$<CXX_COMPILER_ID:MSVC>>>:-Wno-deprecated-declarations>
 )
